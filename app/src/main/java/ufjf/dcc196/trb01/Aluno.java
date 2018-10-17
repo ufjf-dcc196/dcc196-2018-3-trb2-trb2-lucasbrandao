@@ -2,9 +2,9 @@ package ufjf.dcc196.trb01;
 
 public class Aluno {
 
-    private String nome;
-    private String email;
-    private String matricula;
+    public String nome;
+    public String email;
+    public String matricula;
 
 
     Aluno(String name, String email, String registration) {
