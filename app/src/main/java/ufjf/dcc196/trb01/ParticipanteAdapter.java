@@ -37,7 +37,6 @@ public class ParticipanteAdapter extends RecyclerView.Adapter<ParticipanteAdapte
             Aluno aluno = dados.get(i);
 
             viewHolder.txtNome.setText(aluno.nome);
-            viewHolder.txtEmail.setText(aluno.email);
         }
     }
 
@@ -56,7 +55,7 @@ public class ParticipanteAdapter extends RecyclerView.Adapter<ParticipanteAdapte
             super(itemView);
 
             txtNome     = (TextView) itemView.findViewById(R.id.txtNomeAluno);
-            txtEmail    = (TextView) itemView.findViewById(R.id.txtEmailAluno);
+
         }
     }
 }
