@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -18,6 +20,9 @@ public class MainActivity extends AppCompatActivity {
     private Button cadastroAluno;
     private Button cadastroEvento;
 
+    private RecyclerView lstAluno;
+    private ParticipanteAdapter alunoAdapter;
+
     private ArrayList<Aluno> listaAlunos = new ArrayList<Aluno>();
     private ArrayList<Evento> listaEventos = new ArrayList<Evento>();
 
@@ -27,8 +32,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        cadastroAluno = findViewById(R.id.btn_cadastropessoa);
-        cadastroEvento = findViewById(R.id.btn_cadastroevento);
+
+        cadastroAluno = (Button) findViewById(R.id.btn_cadastropessoa);
+        cadastroEvento = (Button) findViewById(R.id.btn_cadastroevento);
 
         cadastroAluno.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,6 +51,14 @@ public class MainActivity extends AppCompatActivity {
                 startActivityForResult(eventoPage, REQUEST_CADASTRAREVENTO);
             }
         });
+
+
+        lstAluno = (RecyclerView) findViewById(R.id.lstAlunos);
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        lstAluno.setLayoutManager(linearLayoutManager);
+        alunoAdapter = new ParticipanteAdapter(listaAlunos);
+        lstAluno.setAdapter(alunoAdapter);
 
     }
 
