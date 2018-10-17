@@ -70,6 +70,9 @@ public class MainActivity extends AppCompatActivity {
         eventoAdapter = new EventoAdapter(listaEventos);
         lstEvento.setAdapter(eventoAdapter);
 
+        this.carregarListaAlunos();
+        this.carregaListaEventos();
+
     }
 
     @Override
@@ -110,4 +113,26 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
+    public void carregarListaAlunos() {
+        this.listaAlunos.add(new Aluno("Lionel Messi","leomessi@gmail.com","201200250AC"));
+        this.listaAlunos.add(new Aluno("Cristiano Penaldo","cr7@gmail.com","201200250AC"));
+        this.listaAlunos.add(new Aluno("Ronaldo Fênomeno","ronaldo@gmail.com","201200250AC"));
+        this.listaAlunos.add(new Aluno("Ronaldinho Gaucho","ronaldinho@gmail.com","201200250AC"));
+        this.listaAlunos.add(new Aluno("Paul Pogba","pogba@gmail.com","201200250AC"));
+        this.listaAlunos.add(new Aluno("Paulo Dybala ","dybala@gmail.com","201200250AC"));
+        this.listaAlunos.add(new Aluno("Neymar Santos","neymidia@gmail.com","201200250AC"));
+        this.listaAlunos.add(new Aluno("Philipe Coutinho","coutinho@gmail.com","201200250AC"));
+        this.listaAlunos.add(new Aluno("Mohammed Salah","salah@gmail.com","201200250AC"));
+    }
+
+    public void carregaListaEventos() {
+        this.listaEventos.add(new Evento("Maratona de Programação","24/10/2018","17:00","Professor","Maratona..."));
+        this.listaEventos.add(new Evento("Maratona de Programação2","25/10/2018","17:00","Professor","Maratona..."));
+        this.listaEventos.add(new Evento("Palestra Segurança da Informação","25/10/2018","14:00","Professor","Palestra..."));
+        this.listaEventos.add(new Evento("Vacathon","24/10/2018","17:00","Professor","Palestra..."));
+        this.listaEventos.add(new Evento("Mesa Redonda","24/10/2018","17:00","Professor","Evento..."));
+        this.listaEventos.add(new Evento("Palestra Banco de Dados NOSQL","24/10/2018","17:00","Professor","Palestra..."));
+    }
+
 }
