@@ -1,7 +1,7 @@
 package ufjf.dcc196.trb01;
 
 public class Evento {
-    private String titulo;
+    public String titulo;
     private String dia;
     private String hora;
     private String facilitador;

@@ -49,12 +49,11 @@ public class ParticipanteAdapter extends RecyclerView.Adapter<ParticipanteAdapte
     public class ViewHolderAluno extends RecyclerView.ViewHolder {
 
         public TextView txtNome;
-        public TextView txtEmail;
 
         public ViewHolderAluno(@NonNull View itemView) {
             super(itemView);
 
-            txtNome     = (TextView) itemView.findViewById(R.id.txtNomeAluno);
+            txtNome = (TextView) itemView.findViewById(R.id.txtNomeAluno);
 
         }
     }
