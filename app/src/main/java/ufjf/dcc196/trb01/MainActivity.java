@@ -21,7 +21,9 @@ public class MainActivity extends AppCompatActivity {
     private Button cadastroEvento;
 
     private RecyclerView lstAluno;
+    private RecyclerView lstEvento;
     private ParticipanteAdapter alunoAdapter;
+    private EventoAdapter eventoAdapter;
 
     private ArrayList<Aluno> listaAlunos = new ArrayList<Aluno>();
     private ArrayList<Evento> listaEventos = new ArrayList<Evento>();
@@ -59,6 +61,14 @@ public class MainActivity extends AppCompatActivity {
         lstAluno.setLayoutManager(linearLayoutManager);
         alunoAdapter = new ParticipanteAdapter(listaAlunos);
         lstAluno.setAdapter(alunoAdapter);
+
+
+        lstEvento = (RecyclerView) findViewById(R.id.lstEventos);
+
+        LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(this);
+        lstEvento.setLayoutManager(linearLayoutManager2);
+        eventoAdapter = new EventoAdapter(listaEventos);
+        lstEvento.setAdapter(eventoAdapter);
 
     }
 
