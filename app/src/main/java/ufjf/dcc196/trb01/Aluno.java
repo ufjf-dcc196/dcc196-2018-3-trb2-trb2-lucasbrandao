@@ -1,8 +1,10 @@
 package ufjf.dcc196.trb01;
 
-public class Aluno {
+import java.io.Serializable;
 
-    public String nome;
+public class Aluno implements Serializable{
+
+    private String nome;
     private String email;
     private String matricula;
 
@@ -13,4 +15,15 @@ public class Aluno {
         this.matricula = registration;
     }
 
+    public String getNome() {
+        return nome;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getMatricula() {
+        return matricula;
+    }
 }

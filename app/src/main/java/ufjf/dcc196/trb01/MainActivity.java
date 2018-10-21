@@ -16,6 +16,7 @@ public class MainActivity extends AppCompatActivity {
 
     public final static int REQUEST_CADASTROALUNO = 1;
     public final static int REQUEST_CADASTRAREVENTO = 2;
+    public final static int REQUEST_DETALHESPARTICIPANTE = 3;
     public final static int REQUEST_DETALHESEVENTO = 4;
 
     private Button cadastroAluno;
