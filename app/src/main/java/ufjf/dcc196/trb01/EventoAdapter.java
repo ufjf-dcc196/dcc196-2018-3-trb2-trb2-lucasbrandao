@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import static ufjf.dcc196.trb01.MainActivity.REQUEST_EDITAR_EVENTO;
+import static ufjf.dcc196.trb01.MainActivity.REQUEST_DETALHESEVENTO;
 
 public class EventoAdapter extends RecyclerView.Adapter<EventoAdapter.ViewHolderEvento> implements View.OnClickListener {
 
@@ -39,7 +39,7 @@ public class EventoAdapter extends RecyclerView.Adapter<EventoAdapter.ViewHolder
 
             Evento evento = dados.get(i);
 
-            viewHolder.txtTitulo.setText(evento.titulo);
+            viewHolder.txtTitulo.setText(evento.getTitulo());
         }
 
     }
@@ -65,8 +65,14 @@ public class EventoAdapter extends RecyclerView.Adapter<EventoAdapter.ViewHolder
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(context,Dados_Evento.class);
-                    ((AppCompatActivity)context).startActivityForResult(intent,REQUEST_EDITAR_EVENTO);
+
+                    if (dados.size() > 0) {
+                        Evento ev = dados.get(getLayoutPosition());
+
+                        Intent intent = new Intent(context, DetalhesEvento.class);
+                        intent.putExtra("DADOS_EVENTO", ev);
+                        ((AppCompatActivity) context).startActivityForResult(intent, REQUEST_DETALHESEVENTO);
+                    }
                 }
             });
         }

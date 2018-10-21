@@ -1,7 +1,9 @@
 package ufjf.dcc196.trb01;
 
-public class Evento {
-    public String titulo;
+import java.io.Serializable;
+
+public class Evento implements Serializable {
+    private String titulo;
     private String dia;
     private String hora;
     private String facilitador;
@@ -14,5 +16,26 @@ public class Evento {
         this.hora = time;
         this.facilitador = facilitator;
         this.descricao = description;
+    }
+
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public String getDia() {
+        return dia;
+    }
+
+    public String getHora() {
+        return hora;
+    }
+
+    public String getFacilitador() {
+        return facilitador;
+    }
+
+    public String getDescricao() {
+        return descricao;
     }
 }
