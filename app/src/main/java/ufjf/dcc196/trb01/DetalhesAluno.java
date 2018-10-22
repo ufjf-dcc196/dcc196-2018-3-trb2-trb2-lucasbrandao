@@ -110,8 +110,13 @@ public class DetalhesAluno extends AppCompatActivity {
             // inscrever no evento pelo aluno selecionado
             case MainActivity.REQUEST_DETALHESEVENTO:
                 int aPosition = getIntent().getExtras().getInt("ALUNOPOSITION");
+                int ePosition = resultado.getInt("EVENTOPOSITION");
+
                 Evento eventoSelecionado = (Evento) resultado.getSerializable("EVENTOSELECIONADO");
+
                 MainActivity.listaAlunos.get(aPosition).inscreverEvento(eventoSelecionado);
+                MainActivity.listaEventos.get(ePosition).inscreverParticipante(MainActivity.listaAlunos.get(aPosition));
+
                 this.eventosInscritosAdapter.notifyDataSetChanged();
                 Toast.makeText(getApplicationContext(), "Evento inscrito: " + eventoSelecionado.getTitulo(), Toast.LENGTH_LONG).show();
                 break;

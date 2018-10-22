@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -73,12 +74,11 @@ public class EventoAdapter extends RecyclerView.Adapter<EventoAdapter.ViewHolder
                     if (dados.size() > 0) {
                         Evento ev = dados.get(getLayoutPosition());
 
-
                         Intent intent = new Intent(context, DetalhesEvento.class);
                         intent.putExtra("DADOS_EVENTO", ev);
+                        intent.putExtra("EVENTOPOSITION", getLayoutPosition());
                         ((AppCompatActivity) context).startActivityForResult(intent, MainActivity.REQUEST_DETALHESEVENTO);
                     }
-
 
 
                 }
