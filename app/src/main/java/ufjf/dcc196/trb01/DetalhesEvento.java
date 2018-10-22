@@ -35,6 +35,7 @@ public class DetalhesEvento extends AppCompatActivity {
         btnInscreverEvento = (Button) findViewById(R.id.btn_inscreverevento);
 
         carregarDadosEvento();
+        carregarDetalhes();
 
         // inscreve em evento selecionado;
         btnInscreverEvento.setOnClickListener(new View.OnClickListener() {
@@ -75,6 +76,12 @@ public class DetalhesEvento extends AppCompatActivity {
         }
     }
 
+    // oculta botao de registrar
+    public void carregarDetalhes() {
+        if (getIntent().getExtras().getBoolean("ISMAINACTIVITY")) {
+            btnInscreverEvento.setVisibility(View.GONE);
+        }
 
+    }
 
 }

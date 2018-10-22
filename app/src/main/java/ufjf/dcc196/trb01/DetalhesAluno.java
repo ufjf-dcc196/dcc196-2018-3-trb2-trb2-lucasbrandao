@@ -62,7 +62,7 @@ public class DetalhesAluno extends AppCompatActivity {
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         MainActivity.lstEvento.setLayoutManager(linearLayoutManager);
-        MainActivity.eventoAdapter = new EventoAdapter(MainActivity.listaEventos);
+        MainActivity.eventoAdapter = new EventoAdapter(MainActivity.listaEventos, false);
         MainActivity.lstEvento.setAdapter(MainActivity.eventoAdapter);
 
 
@@ -108,7 +108,7 @@ public class DetalhesAluno extends AppCompatActivity {
                 break;
 
             // inscrever no evento pelo aluno selecionado
-            case MainActivity.REQUEST_DETALHESEVENTO:
+            case MainActivity.REQUEST_INSCREVERNOEVENTO:
                 int aPosition = getIntent().getExtras().getInt("ALUNOPOSITION");
                 int ePosition = resultado.getInt("EVENTOPOSITION");
 

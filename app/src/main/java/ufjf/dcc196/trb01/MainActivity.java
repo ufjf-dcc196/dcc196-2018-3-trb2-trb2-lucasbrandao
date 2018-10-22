@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     public final static int REQUEST_DETALHESPARTICIPANTE = 3;
     public final static int REQUEST_DETALHESEVENTO = 4;
     public final static int REQUEST_ALTERARDADOSALUNO = 5;
+    public final static int REQUEST_INSCREVERNOEVENTO = 6;
 
     private Button cadastroAluno;
     private Button cadastroEvento;
@@ -73,8 +74,9 @@ public class MainActivity extends AppCompatActivity {
 
         LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(this);
         lstEvento.setLayoutManager(linearLayoutManager2);
-        eventoAdapter = new EventoAdapter(listaEventos);
+        eventoAdapter = new EventoAdapter(listaEventos, true);
         lstEvento.setAdapter(eventoAdapter);
+
 
 
         this.carregarListaAlunos();

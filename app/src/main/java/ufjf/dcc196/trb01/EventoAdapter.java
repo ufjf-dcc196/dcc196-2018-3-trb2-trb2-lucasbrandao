@@ -17,9 +17,11 @@ import java.util.List;
 public class EventoAdapter extends RecyclerView.Adapter<EventoAdapter.ViewHolderEvento> implements View.OnClickListener {
 
     private List<Evento> dados;
+    private Boolean isMainActivity;
 
-    public EventoAdapter(List<Evento> dados) {
+    public EventoAdapter(List<Evento> dados, Boolean isMainActivity) {
         this.dados = dados;
+        this.isMainActivity = isMainActivity;
     }
 
     @NonNull
@@ -28,7 +30,7 @@ public class EventoAdapter extends RecyclerView.Adapter<EventoAdapter.ViewHolder
 
         LayoutInflater layoutInflater = LayoutInflater.from(viewGroup.getContext());
         View view = layoutInflater.inflate(R.layout.evento_layout, viewGroup, false);
-        ViewHolderEvento holderEvento = new ViewHolderEvento(view, viewGroup.getContext());
+        ViewHolderEvento holderEvento = new ViewHolderEvento(view, viewGroup.getContext(), isMainActivity);
 
         return holderEvento;
     }
@@ -54,15 +56,12 @@ public class EventoAdapter extends RecyclerView.Adapter<EventoAdapter.ViewHolder
 
     }
 
-    public Evento getEvento(int position) {
-        return dados.get(position);
-    }
 
     public class ViewHolderEvento extends RecyclerView.ViewHolder {
 
         public TextView txtTitulo;
 
-        public ViewHolderEvento(@NonNull final View itemView, final Context context) {
+        public ViewHolderEvento(@NonNull final View itemView, final Context context, Boolean mainAct) {
             super(itemView);
             txtTitulo = (TextView) itemView.findViewById(R.id.txtTituloEvento);
 
@@ -77,9 +76,15 @@ public class EventoAdapter extends RecyclerView.Adapter<EventoAdapter.ViewHolder
                         Intent intent = new Intent(context, DetalhesEvento.class);
                         intent.putExtra("DADOS_EVENTO", ev);
                         intent.putExtra("EVENTOPOSITION", getLayoutPosition());
-                        ((AppCompatActivity) context).startActivityForResult(intent, MainActivity.REQUEST_DETALHESEVENTO);
-                    }
+                        if (isMainActivity) {
+                            intent.putExtra("ISMAINACTIVITY", true);
+                            ((AppCompatActivity) context).startActivityForResult(intent, MainActivity.REQUEST_DETALHESEVENTO);
+                        } else {
+                            intent.putExtra("ISMAINACTIVITY", false);
+                            ((AppCompatActivity) context).startActivityForResult(intent, MainActivity.REQUEST_INSCREVERNOEVENTO);
+                        }
 
+                    }
 
                 }
             });
