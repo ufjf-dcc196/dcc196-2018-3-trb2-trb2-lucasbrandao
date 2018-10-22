@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -66,6 +67,7 @@ public class ParticipanteAdapter extends RecyclerView.Adapter<ParticipanteAdapte
 
                         Intent intent = new Intent(context, DetalhesAluno.class);
                         intent.putExtra("DADOS_PARTICIPANTE", aluno);
+                        intent.putExtra("ALUNOPOSITION", getLayoutPosition());
                         ((AppCompatActivity)context).startActivityForResult(intent, MainActivity.REQUEST_DETALHESPARTICIPANTE);
                     }
                 }

@@ -26,4 +26,9 @@ public class Aluno implements Serializable{
     public String getMatricula() {
         return matricula;
     }
+
+    public void alterarDados(String novoNome, String novoEmail) {
+        this.nome = novoNome;
+        this.email = novoEmail;
+    }
 }

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class CadastroParticipante extends AppCompatActivity {
 
@@ -24,6 +25,8 @@ public class CadastroParticipante extends AppCompatActivity {
         emailAluno = findViewById(R.id.txt_email);
         matriculaAluno = findViewById(R.id.txt_matricula);
 
+        verificaEdicao();
+
         cadastroAluno.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -34,6 +37,13 @@ public class CadastroParticipante extends AppCompatActivity {
                 resposta.putExtra("nome", nome);
                 resposta.putExtra("email", email);
                 resposta.putExtra("matricula", matricula);
+
+                if (getIntent().getExtras().getInt("REQUEST_ALTERARDADOS") == MainActivity.REQUEST_ALTERARDADOSALUNO){
+                    if (!nome.isEmpty() && !email.isEmpty()) {
+                        setResult(RESULT_OK, resposta);
+                        finish();
+                    }
+                }
 
 
                 if (!nome.isEmpty() && !email.isEmpty() && !matricula.isEmpty()) {
@@ -46,4 +56,13 @@ public class CadastroParticipante extends AppCompatActivity {
             }
         });
     }
+
+    private void verificaEdicao() {
+
+        if (getIntent().getExtras().getInt("REQUEST_ALTERARDADOS") == MainActivity.REQUEST_ALTERARDADOSALUNO) {
+             matriculaAluno.setVisibility(View.GONE);
+             cadastroAluno.setText("ALTERAR DADOS");
+        }
+    }
+
 }

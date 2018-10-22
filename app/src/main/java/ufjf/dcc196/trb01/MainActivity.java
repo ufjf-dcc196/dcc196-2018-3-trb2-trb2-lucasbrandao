@@ -6,11 +6,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -18,16 +20,17 @@ public class MainActivity extends AppCompatActivity {
     public final static int REQUEST_CADASTRAREVENTO = 2;
     public final static int REQUEST_DETALHESPARTICIPANTE = 3;
     public final static int REQUEST_DETALHESEVENTO = 4;
+    public final static int REQUEST_ALTERARDADOSALUNO = 5;
 
     private Button cadastroAluno;
     private Button cadastroEvento;
 
-    private RecyclerView lstAluno;
+    private static RecyclerView lstAluno;
     private RecyclerView lstEvento;
-    private ParticipanteAdapter alunoAdapter;
+    private static ParticipanteAdapter alunoAdapter;
     private EventoAdapter eventoAdapter;
 
-    private ArrayList<Aluno> listaAlunos = new ArrayList<Aluno>();
+    public static ArrayList<Aluno> listaAlunos = new ArrayList<Aluno>();
     private ArrayList<Evento> listaEventos = new ArrayList<Evento>();
 
 
@@ -44,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent alunoPage = new Intent(MainActivity.this, CadastroParticipante.class);
+                alunoPage.putExtra("REQUEST_ALTERARDADOS", 0);
                 startActivityForResult(alunoPage, REQUEST_CADASTROALUNO);
             }
         });
@@ -74,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
 
         this.carregarListaAlunos();
         this.carregaListaEventos();
+
 
     }
 
@@ -135,6 +140,16 @@ public class MainActivity extends AppCompatActivity {
         this.listaEventos.add(new Evento("Vacathon","24/10/2018","17:00","Professor","Palestra..."));
         this.listaEventos.add(new Evento("Mesa Redonda","24/10/2018","17:00","Professor","Evento..."));
         this.listaEventos.add(new Evento("Palestra Banco de Dados NOSQL","24/10/2018","17:00","Professor","Palestra..."));
+    }
+
+    public static void alterarDadosParticipante(int position, String nome, String email) {
+        listaAlunos.get(position).alterarDados(nome, email);
+
+        // atualiza a recyclerview de participantes
+        List<Aluno> dados = listaAlunos;
+        alunoAdapter = new ParticipanteAdapter(dados);
+        lstAluno.setAdapter(alunoAdapter);
+
     }
 
 }
