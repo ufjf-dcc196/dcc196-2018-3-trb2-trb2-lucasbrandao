@@ -33,6 +33,8 @@ public class DetalhesAluno extends AppCompatActivity {
             public void onClick(View view) {
                 Intent alterardadosPage = new Intent(DetalhesAluno.this, CadastroParticipante.class);
                 alterardadosPage.putExtra("REQUEST_ALTERARDADOS", MainActivity.REQUEST_ALTERARDADOSALUNO);
+                alterardadosPage.putExtra("NOMEATUAL", nome.getText().toString());
+                alterardadosPage.putExtra("EMAILATUAL", email.getText().toString());
                 startActivityForResult(alterardadosPage, MainActivity.REQUEST_ALTERARDADOSALUNO);
             }
         });

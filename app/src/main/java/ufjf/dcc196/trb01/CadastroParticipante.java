@@ -61,6 +61,8 @@ public class CadastroParticipante extends AppCompatActivity {
 
         if (getIntent().getExtras().getInt("REQUEST_ALTERARDADOS") == MainActivity.REQUEST_ALTERARDADOSALUNO) {
              matriculaAluno.setVisibility(View.GONE);
+             nomeAluno.setText(getIntent().getExtras().get("NOMEATUAL").toString());
+             emailAluno.setText(getIntent().getExtras().get("EMAILATUAL").toString());
              cadastroAluno.setText("ALTERAR DADOS");
         }
     }
