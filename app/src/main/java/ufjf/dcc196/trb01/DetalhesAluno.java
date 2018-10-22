@@ -4,10 +4,15 @@ import android.content.Intent;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
 
 public class DetalhesAluno extends AppCompatActivity {
 
@@ -15,6 +20,9 @@ public class DetalhesAluno extends AppCompatActivity {
     private TextView email;
     private TextView matricula;
     private Button  alterarDados;
+
+    private RecyclerView lstEventosInscritos;
+    private EventosInscritosAdapter eventosInscritosAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +36,7 @@ public class DetalhesAluno extends AppCompatActivity {
 
         carregarDadosAluno();
 
+        // altera dados do participante
         alterarDados.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -38,6 +47,24 @@ public class DetalhesAluno extends AppCompatActivity {
                 startActivityForResult(alterardadosPage, MainActivity.REQUEST_ALTERARDADOSALUNO);
             }
         });
+
+        // carrega lista de eventos inscritos
+        lstEventosInscritos = (RecyclerView) findViewById(R.id.lstEventosInscritos);
+        LinearLayoutManager linearLayout = new LinearLayoutManager(this);
+        lstEventosInscritos.setLayoutManager(linearLayout);
+        int position = getIntent().getExtras().getInt("ALUNOPOSITION");
+        eventosInscritosAdapter = new EventosInscritosAdapter(MainActivity.listaAlunos.get(position).getEventosInscritos());
+        lstEventosInscritos.setAdapter(eventosInscritosAdapter);
+
+
+        // carrega lista de eventos disponiveis para inscricao
+        MainActivity.lstEvento = (RecyclerView) findViewById(R.id.lstEventosDisponiveis);
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        MainActivity.lstEvento.setLayoutManager(linearLayoutManager);
+        MainActivity.eventoAdapter = new EventoAdapter(MainActivity.listaEventos);
+        MainActivity.lstEvento.setAdapter(MainActivity.eventoAdapter);
+
 
     }
 
@@ -76,9 +103,19 @@ public class DetalhesAluno extends AppCompatActivity {
                 // alterando nome na activity detalhesaluno
                 this.nome.setText(nome);
                 this.email.setText(email);
-                Toast.makeText(getApplicationContext(),"Dados Alterados.", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Dados Alterados.", Toast.LENGTH_LONG).show();
 
                 break;
+
+            // inscrever no evento pelo aluno selecionado
+            case MainActivity.REQUEST_DETALHESEVENTO:
+                int aPosition = getIntent().getExtras().getInt("ALUNOPOSITION");
+                Evento eventoSelecionado = (Evento) resultado.getSerializable("EVENTOSELECIONADO");
+                MainActivity.listaAlunos.get(aPosition).inscreverEvento(eventoSelecionado);
+                this.eventosInscritosAdapter.notifyDataSetChanged();
+                Toast.makeText(getApplicationContext(), "Evento inscrito: " + eventoSelecionado.getTitulo(), Toast.LENGTH_LONG).show();
+                break;
+
         }
     }
 }

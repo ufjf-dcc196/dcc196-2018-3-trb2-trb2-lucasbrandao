@@ -26,12 +26,12 @@ public class MainActivity extends AppCompatActivity {
     private Button cadastroEvento;
 
     private static RecyclerView lstAluno;
-    private RecyclerView lstEvento;
+    public static RecyclerView lstEvento;
     private static ParticipanteAdapter alunoAdapter;
-    private EventoAdapter eventoAdapter;
+    public static EventoAdapter eventoAdapter;
 
     public static ArrayList<Aluno> listaAlunos = new ArrayList<Aluno>();
-    private ArrayList<Evento> listaEventos = new ArrayList<Evento>();
+    public static ArrayList<Evento> listaEventos = new ArrayList<Evento>();
 
 
     @Override
@@ -75,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
         lstEvento.setLayoutManager(linearLayoutManager2);
         eventoAdapter = new EventoAdapter(listaEventos);
         lstEvento.setAdapter(eventoAdapter);
+
 
         this.carregarListaAlunos();
         this.carregaListaEventos();
@@ -145,11 +146,8 @@ public class MainActivity extends AppCompatActivity {
     public static void alterarDadosParticipante(int position, String nome, String email) {
         listaAlunos.get(position).alterarDados(nome, email);
 
-        // atualiza a recyclerview de participantes
-        List<Aluno> dados = listaAlunos;
-        alunoAdapter = new ParticipanteAdapter(dados);
-        lstAluno.setAdapter(alunoAdapter);
-
+        // atualiza recyclerview
+        alunoAdapter.notifyDataSetChanged();
     }
 
 }
