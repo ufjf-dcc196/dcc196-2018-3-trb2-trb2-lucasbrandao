@@ -2,6 +2,7 @@ package ufjf.dcc196.trb01;
 
 import android.content.Intent;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 public class DetalhesAluno extends AppCompatActivity {
+
 
     private TextView nome;
     private TextView email;
@@ -78,6 +80,16 @@ public class DetalhesAluno extends AppCompatActivity {
             matricula.setText(participante.getMatricula());
 
         }
+    }
+
+    // excluir evento inscrito
+    public  void excluirEventoInscrito(int ePosition) {
+        int aPosition = getIntent().getExtras().getInt("ALUNOPOSITION");
+        MainActivity.listaAlunos.get(aPosition).cancelarInscricao(ePosition);
+        eventosInscritosAdapter.notifyDataSetChanged();
+
+
+
     }
 
     @Override

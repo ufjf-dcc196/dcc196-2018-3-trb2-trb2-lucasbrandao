@@ -69,6 +69,8 @@ public class ParticipanteAdapter extends RecyclerView.Adapter<ParticipanteAdapte
                         intent.putExtra("DADOS_PARTICIPANTE", aluno);
                         intent.putExtra("ALUNOPOSITION", getLayoutPosition());
                         ((AppCompatActivity)context).startActivityForResult(intent, MainActivity.REQUEST_DETALHESPARTICIPANTE);
+
+                        MainActivity.alunoPosition = getLayoutPosition();
                     }
                 }
             });

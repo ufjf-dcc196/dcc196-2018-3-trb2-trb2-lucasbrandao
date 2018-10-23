@@ -45,4 +45,8 @@ public class Aluno implements Serializable{
 
         return this.eventosInscritos;
     }
+
+    public Evento getEvento(int position) {
+        return this.eventosInscritos.get(position);
+    }
 }

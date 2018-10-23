@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Evento implements Serializable {
+
     private String titulo;
     private String dia;
     private String hora;
@@ -48,4 +49,9 @@ public class Evento implements Serializable {
     public void inscreverParticipante(Aluno al) {
         this.participantesInscritos.add(al);
     }
+
+    public void cancelaInscricaoParticipante(int position) {
+        this.participantesInscritos.remove(position);
+    }
+
 }

@@ -23,6 +23,9 @@ public class MainActivity extends AppCompatActivity {
     public final static int REQUEST_ALTERARDADOSALUNO = 5;
     public final static int REQUEST_INSCREVERNOEVENTO = 6;
 
+    // variavel para poder excluir inscricao com toque longo
+    public static int alunoPosition = 0;
+
     private Button cadastroAluno;
     private Button cadastroEvento;
 
