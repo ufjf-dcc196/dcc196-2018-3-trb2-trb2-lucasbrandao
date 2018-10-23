@@ -126,6 +126,17 @@ public class DetalhesAluno extends AppCompatActivity {
 
                 Evento eventoSelecionado = (Evento) resultado.getSerializable("EVENTOSELECIONADO");
 
+                //verificar se aluno ja esta inscrito no evento
+                String nomeAluno = MainActivity.listaAlunos.get(aPosition).getNome();
+
+                for (int i=0; i<MainActivity.listaEventos.get(ePosition).getParticipantesInscritos().size(); i++){
+                    if (nomeAluno.equals(MainActivity.listaEventos.get(ePosition).getParticipantesInscritos().get(i).getNome())) {
+                        Toast.makeText(getApplicationContext(), "Você ja se inscreveu neste evento.", Toast.LENGTH_LONG).show();
+                        return;
+                    }
+                }
+
+                // inscrever
                 MainActivity.listaAlunos.get(aPosition).inscreverEvento(eventoSelecionado);
                 MainActivity.listaEventos.get(ePosition).inscreverParticipante(MainActivity.listaAlunos.get(aPosition));
 
