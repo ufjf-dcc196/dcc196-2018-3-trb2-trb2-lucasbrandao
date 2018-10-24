@@ -104,6 +104,14 @@ public class MainActivity extends AppCompatActivity {
                     String email = resultado.getString("email");
                     String matricula = resultado.getString("matricula");
 
+                    //verificar se matricula já está cadastrada
+                    for (int i=0; i<listaAlunos.size(); i++){
+                        if (matricula.equals(listaAlunos.get(i).getMatricula())){
+                            Toast.makeText(getApplicationContext(), "Este número de matrícula já foi cadastrado", Toast.LENGTH_LONG).show();
+                            return;
+                        }
+                    }
+
                     Aluno novoAluno = new Aluno(nome, email, matricula);
                     this.listaAlunos.add(novoAluno);
 
@@ -128,15 +136,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void carregarListaAlunos() {
-        this.listaAlunos.add(new Aluno("Lionel Messi","leomessi@gmail.com","201200250AC"));
-        this.listaAlunos.add(new Aluno("Cristiano Penaldo","cr7@gmail.com","201200250AC"));
-        this.listaAlunos.add(new Aluno("Ronaldo Fênomeno","ronaldo@gmail.com","201200250AC"));
-        this.listaAlunos.add(new Aluno("Ronaldinho Gaucho","ronaldinho@gmail.com","201200250AC"));
-        this.listaAlunos.add(new Aluno("Paul Pogba","pogba@gmail.com","201200250AC"));
-        this.listaAlunos.add(new Aluno("Paulo Dybala ","dybala@gmail.com","201200250AC"));
-        this.listaAlunos.add(new Aluno("Neymar Santos","neymidia@gmail.com","201200250AC"));
-        this.listaAlunos.add(new Aluno("Philipe Coutinho","coutinho@gmail.com","201200250AC"));
-        this.listaAlunos.add(new Aluno("Mohammed Salah","salah@gmail.com","201200250AC"));
+        this.listaAlunos.add(new Aluno("Amélia Godoy","amelia@gmail.com","201840250A"));
+        this.listaAlunos.add(new Aluno("Bartolomeu Marañón","bartolomeu@gmail.com","201850250A"));
+        this.listaAlunos.add(new Aluno("Catarino Grilo","catarino@gmail.com","201860250A"));
+        this.listaAlunos.add(new Aluno("Ermelinda Méndez","ermelinda@gmail.com","201870250A"));
+        this.listaAlunos.add(new Aluno("Hermígio Capanema","capanema@gmail.com","201880250A"));
+        this.listaAlunos.add(new Aluno("Noé Hernández","noeh@gmail.com","201890250A"));
+        this.listaAlunos.add(new Aluno("Nídia Simão","nidias@gmail.com","201810250A"));
+        this.listaAlunos.add(new Aluno("Poliana Rebello","polianarebello@gmail.com","201820250A"));
+        this.listaAlunos.add(new Aluno("Silvana Girão","giraosilvana@gmail.com","201830250A"));
     }
 
     public void carregaListaEventos() {
