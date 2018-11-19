@@ -1,6 +1,8 @@
 package ufjf.dcc196.trb01;
 
 import android.content.Intent;
+import android.database.SQLException;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -12,7 +14,6 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -33,6 +34,9 @@ public class MainActivity extends AppCompatActivity {
     public static RecyclerView lstEvento;
     private static ParticipanteAdapter alunoAdapter;
     public static EventoAdapter eventoAdapter;
+
+    private SQLiteDatabase conection;
+    private participanteBD participante_bd;
 
     public static ArrayList<Aluno> listaAlunos = new ArrayList<Aluno>();
     public static ArrayList<Evento> listaEventos = new ArrayList<Evento>();
@@ -84,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
 
         this.carregarListaAlunos();
         this.carregaListaEventos();
-
+        createConection();
 
     }
 
@@ -132,6 +136,18 @@ public class MainActivity extends AppCompatActivity {
                     break;
 
             }
+        }
+    }
+
+    private void createConection() {
+        try {
+            participante_bd = new participanteBD(this);
+
+            conection = participante_bd.getWritableDatabase();
+            Log.d("participanteBD", "createConection: sucessfull");
+
+        } catch (SQLException e) {
+            Log.d("participanteBD", "createConection: fail");
         }
     }
 

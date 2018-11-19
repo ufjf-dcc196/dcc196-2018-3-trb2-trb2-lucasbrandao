@@ -5,9 +5,9 @@ import java.util.ArrayList;
 
 public class Aluno implements Serializable{
 
-    private String nome;
-    private String email;
-    private String matricula;
+    public String nome;
+    public String email;
+    public String matricula;
     private ArrayList<Evento> eventosInscritos = new ArrayList<Evento>();
 
     Aluno(String name, String email, String registration) {

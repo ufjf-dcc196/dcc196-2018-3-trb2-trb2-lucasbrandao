@@ -6,7 +6,7 @@ public class scriptSQL {
         StringBuilder sql   = new StringBuilder();
 
         sql.append("    CREATE TABLE IF NOT EXISTS PARTICIPANTE ( ");
-        sql.append("    MATRICULA   INTEGER PRIMARY KEY NOT NULL, ");
+        sql.append("    MATRICULA   VARCHAR (20) PRIMARY KEY NOT NULL, ");
         sql.append("    NOME        VARCHAR (50) NOT NULL, ");
         sql.append("    EMAIL       VARCHAR (50) NOT NULL ) ");
 
