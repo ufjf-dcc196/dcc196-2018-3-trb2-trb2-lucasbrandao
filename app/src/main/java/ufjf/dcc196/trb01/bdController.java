@@ -2,10 +2,12 @@ package ufjf.dcc196.trb01;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.util.ArrayList;
-import java.util.List;
+
 
 public class bdController {
 
@@ -17,14 +19,20 @@ public class bdController {
     }
 
 
-    public void insertParticipante(Aluno aluno) {
+    public void insertParticipante(Aluno participante) {
 
-        ContentValues contentValues = new ContentValues();
-        contentValues.put("MATRICULA", aluno.getMatricula());
-        contentValues.put("NOME", aluno.getNome());
-        contentValues.put("EMAIL", aluno.getEmail());
+       try {
 
-        conection.insertOrThrow("PARTICIPANTE", null, contentValues);
+           ContentValues contentValues = new ContentValues();
+
+           contentValues.put("NOME", participante.nome);
+           contentValues.put("EMAIL", participante.email);
+           contentValues.put("MATRICULA", participante.matricula);
+
+           conection.insertOrThrow("PARTICIPANTE", null, contentValues);
+       }catch (SQLException e) {
+           Log.d("insert", "insertParticipante: erro");
+       }
     }
 
     public void editParticipante(Aluno aluno) {
@@ -35,14 +43,14 @@ public class bdController {
         contentValues.put("EMAIL", aluno.getEmail());
 
         String[] param = new String[1];
-        param[0] = aluno.getMatricula();
+        param[0] = String.valueOf(aluno.getMatricula());
 
         conection.update("PARTICIPANTE", contentValues, "MATRICULA = ?", param);
     }
 
-    public List<Aluno> getAll() {
+    public ArrayList<Aluno> getAll() {
 
-        List<Aluno> participantes = new ArrayList<Aluno>();
+        ArrayList<Aluno> participantes = new ArrayList<Aluno>();
 
         StringBuilder sql = new StringBuilder();
         sql.append(" SELECT MATRICULA, NOME, EMAIL ");
@@ -55,7 +63,7 @@ public class bdController {
 
             do {
                 Aluno al = new Aluno(null, null, null);
-                al.matricula = result.getString(result.getColumnIndexOrThrow("MATRICULA"));
+                al.matricula = result.getInt(result.getColumnIndexOrThrow("MATRICULA"));
                 al.nome = result.getString(result.getColumnIndexOrThrow("NOME"));
                 al.email = result.getString(result.getColumnIndexOrThrow("EMAIL"));
 
@@ -67,6 +75,33 @@ public class bdController {
 
         return participantes;
     }
+
+    public void loadList() {
+
+        ArrayList<Aluno> participantes = new ArrayList<Aluno>();
+
+        StringBuilder sql = new StringBuilder();
+        sql.append(" SELECT MATRICULA, NOME, EMAIL ");
+        sql.append(" FROM PARTICIPANTE ");
+
+        Cursor result = conection.rawQuery(sql.toString(), null);
+
+        if (result.getCount() > 0) {
+            result.moveToFirst();
+
+            do {
+                Aluno al = new Aluno(null, null, null);
+                al.matricula = result.getInt(result.getColumnIndexOrThrow("MATRICULA"));
+                al.nome = result.getString(result.getColumnIndexOrThrow("NOME"));
+                al.email = result.getString(result.getColumnIndexOrThrow("EMAIL"));
+
+                MainActivity.listaAlunos.add(al);
+
+            } while (result.moveToNext());
+
+        }
+    }
+
 
     public Aluno getParticipante(int position) {
         Aluno participante = new Aluno(null, null, null);
@@ -84,7 +119,7 @@ public class bdController {
         if (result.getCount() > 0) {
             result.moveToFirst();
 
-            participante.matricula = result.getString(result.getColumnIndexOrThrow("MATRICULA"));
+            participante.matricula = result.getInt(result.getColumnIndexOrThrow("MATRICULA"));
             participante.nome = result.getString(result.getColumnIndexOrThrow("NOME"));
             participante.email = result.getString(result.getColumnIndexOrThrow("EMAIL"));
 

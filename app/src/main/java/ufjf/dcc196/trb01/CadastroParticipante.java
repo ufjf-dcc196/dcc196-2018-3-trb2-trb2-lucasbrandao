@@ -1,8 +1,11 @@
 package ufjf.dcc196.trb01;
 
 import android.content.Intent;
+import android.database.SQLException;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -14,6 +17,7 @@ public class CadastroParticipante extends AppCompatActivity {
     private TextView nomeAluno;
     private TextView emailAluno;
     private TextView matriculaAluno;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +37,7 @@ public class CadastroParticipante extends AppCompatActivity {
                 Intent resposta = new Intent();
                 String nome = nomeAluno.getText().toString();
                 String email = emailAluno.getText().toString();
-                String matricula = matriculaAluno.getText().toString();
+                Integer matricula = Integer.valueOf(matriculaAluno.getText().toString());
                 resposta.putExtra("nome", nome);
                 resposta.putExtra("email", email);
                 resposta.putExtra("matricula", matricula);
@@ -46,7 +50,8 @@ public class CadastroParticipante extends AppCompatActivity {
                 }
 
 
-                if (!nome.isEmpty() && !email.isEmpty() && !matricula.isEmpty()) {
+                if (!nome.isEmpty() && !email.isEmpty() && !matricula.toString().isEmpty()) {
+
                     setResult(RESULT_OK, resposta);
                     finish();
                 }
@@ -66,5 +71,7 @@ public class CadastroParticipante extends AppCompatActivity {
              cadastroAluno.setText("ALTERAR DADOS");
         }
     }
+
+
 
 }

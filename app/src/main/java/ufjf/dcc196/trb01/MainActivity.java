@@ -35,8 +35,9 @@ public class MainActivity extends AppCompatActivity {
     private static ParticipanteAdapter alunoAdapter;
     public static EventoAdapter eventoAdapter;
 
-    private SQLiteDatabase conection;
-    private participanteBD participante_bd;
+    public SQLiteDatabase conection;
+    public participanteBD participante_bd;
+    public bdController bdcontroller;
 
     public static ArrayList<Aluno> listaAlunos = new ArrayList<Aluno>();
     public static ArrayList<Evento> listaEventos = new ArrayList<Evento>();
@@ -84,11 +85,11 @@ public class MainActivity extends AppCompatActivity {
         eventoAdapter = new EventoAdapter(listaEventos, true);
         lstEvento.setAdapter(eventoAdapter);
 
-
-
-        this.carregarListaAlunos();
-        this.carregaListaEventos();
         createConection();
+        criarListaParticipantes();
+        carregarListaAlunos();
+        this.carregaListaEventos();
+
 
     }
 
@@ -106,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
                 case MainActivity.REQUEST_CADASTROALUNO:
                     String nome = resultado.getString("nome");
                     String email = resultado.getString("email");
-                    String matricula = resultado.getString("matricula");
+                    Integer matricula = resultado.getInt("matricula");
 
                     //verificar se matricula já está cadastrada
                     for (int i=0; i<listaAlunos.size(); i++){
@@ -117,7 +118,8 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     Aluno novoAluno = new Aluno(nome, email, matricula);
-                    this.listaAlunos.add(novoAluno);
+                    bdcontroller.insertParticipante(novoAluno);
+                    alunoAdapter.notifyDataSetChanged();
 
                     Toast.makeText(getApplicationContext(), "Aluno Registrado: "+ nome, Toast.LENGTH_LONG).show();
                     break;
@@ -144,23 +146,29 @@ public class MainActivity extends AppCompatActivity {
             participante_bd = new participanteBD(this);
 
             conection = participante_bd.getWritableDatabase();
+
             Log.d("participanteBD", "createConection: sucessfull");
+            bdcontroller = new bdController(conection);
 
         } catch (SQLException e) {
             Log.d("participanteBD", "createConection: fail");
         }
     }
 
+    public void criarListaParticipantes() {
+        bdcontroller.insertParticipante(new Aluno("Amélia Godoy","amelia@gmail.com",45454545));
+        bdcontroller.insertParticipante(new Aluno("Bartolomeu","bartolomeu@gmail.com",201551));
+        bdcontroller.insertParticipante(new Aluno("Catarino Grilo","catarino@gmail.com",201552));
+        bdcontroller.insertParticipante(new Aluno("Ermelinda Méndez","ermelinda@gmail.com",201553));
+        bdcontroller.insertParticipante(new Aluno("Hermígio Capanema","capanema@gmail.com",201554));
+        bdcontroller.insertParticipante(new Aluno("Noé Hernández","noeh@gmail.com",201555));
+        bdcontroller.insertParticipante(new Aluno("Nídia Simão","nidias@gmail.com",201556));
+        bdcontroller.insertParticipante(new Aluno("Poliana Rebello","polianarebello@gmail.com",201557));
+        bdcontroller.insertParticipante(new Aluno("Silvana Girão","giraosilvana@gmail.com",201558));
+    }
+
     public void carregarListaAlunos() {
-        this.listaAlunos.add(new Aluno("Amélia Godoy","amelia@gmail.com","201840250A"));
-        this.listaAlunos.add(new Aluno("Bartolomeu Marañón","bartolomeu@gmail.com","201850250A"));
-        this.listaAlunos.add(new Aluno("Catarino Grilo","catarino@gmail.com","201860250A"));
-        this.listaAlunos.add(new Aluno("Ermelinda Méndez","ermelinda@gmail.com","201870250A"));
-        this.listaAlunos.add(new Aluno("Hermígio Capanema","capanema@gmail.com","201880250A"));
-        this.listaAlunos.add(new Aluno("Noé Hernández","noeh@gmail.com","201890250A"));
-        this.listaAlunos.add(new Aluno("Nídia Simão","nidias@gmail.com","201810250A"));
-        this.listaAlunos.add(new Aluno("Poliana Rebello","polianarebello@gmail.com","201820250A"));
-        this.listaAlunos.add(new Aluno("Silvana Girão","giraosilvana@gmail.com","201830250A"));
+        bdcontroller.loadList();
     }
 
     public void carregaListaEventos() {
