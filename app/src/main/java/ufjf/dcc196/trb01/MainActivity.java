@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
     public static EventoAdapter eventoAdapter;
 
     public SQLiteDatabase conection;
-    public participanteBD participante_bd;
+    public participanteBD dados_bd;
     public bdController bdcontroller;
 
     public static ArrayList<Aluno> listaAlunos = new ArrayList<Aluno>();
@@ -85,11 +85,11 @@ public class MainActivity extends AppCompatActivity {
         eventoAdapter = new EventoAdapter(listaEventos, true);
         lstEvento.setAdapter(eventoAdapter);
 
+
         createConection();
         criarListaParticipantes();
-        carregarListaAlunos();
-        this.carregaListaEventos();
-
+        criarListaEventos();
+        carregarListas();
 
     }
 
@@ -107,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
                 case MainActivity.REQUEST_CADASTROALUNO:
                     String nome = resultado.getString("nome");
                     String email = resultado.getString("email");
-                    Integer matricula = resultado.getInt("matricula");
+                    String matricula = resultado.getString("matricula");
 
                     //verificar se matricula já está cadastrada
                     for (int i=0; i<listaAlunos.size(); i++){
@@ -119,6 +119,7 @@ public class MainActivity extends AppCompatActivity {
 
                     Aluno novoAluno = new Aluno(nome, email, matricula);
                     bdcontroller.insertParticipante(novoAluno);
+                    bdcontroller.loadParticipantesList();
                     alunoAdapter.notifyDataSetChanged();
 
                     Toast.makeText(getApplicationContext(), "Aluno Registrado: "+ nome, Toast.LENGTH_LONG).show();
@@ -132,7 +133,10 @@ public class MainActivity extends AppCompatActivity {
                     String descricao = resultado.getString("descricao");
 
                     Evento novoEvento = new Evento(titulo, dia, hora, facilitador, descricao);
-                    this.listaEventos.add(novoEvento);
+                    bdcontroller.insertEvento(novoEvento);
+                    bdcontroller.loadEventosList();
+                    eventoAdapter.notifyDataSetChanged();
+
 
                     Toast.makeText(getApplicationContext(), "Evento Registrado: "+ titulo, Toast.LENGTH_LONG).show();
                     break;
@@ -143,12 +147,10 @@ public class MainActivity extends AppCompatActivity {
 
     private void createConection() {
         try {
-            participante_bd = new participanteBD(this);
-
-            conection = participante_bd.getWritableDatabase();
-
-            Log.d("participanteBD", "createConection: sucessfull");
+            dados_bd = new participanteBD(this);
+            conection = dados_bd.getWritableDatabase();
             bdcontroller = new bdController(conection);
+            Log.d("participanteBD", "createConection: sucessfull");
 
         } catch (SQLException e) {
             Log.d("participanteBD", "createConection: fail");
@@ -156,28 +158,29 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void criarListaParticipantes() {
-        bdcontroller.insertParticipante(new Aluno("Amélia Godoy","amelia@gmail.com",45454545));
-        bdcontroller.insertParticipante(new Aluno("Bartolomeu","bartolomeu@gmail.com",201551));
-        bdcontroller.insertParticipante(new Aluno("Catarino Grilo","catarino@gmail.com",201552));
-        bdcontroller.insertParticipante(new Aluno("Ermelinda Méndez","ermelinda@gmail.com",201553));
-        bdcontroller.insertParticipante(new Aluno("Hermígio Capanema","capanema@gmail.com",201554));
-        bdcontroller.insertParticipante(new Aluno("Noé Hernández","noeh@gmail.com",201555));
-        bdcontroller.insertParticipante(new Aluno("Nídia Simão","nidias@gmail.com",201556));
-        bdcontroller.insertParticipante(new Aluno("Poliana Rebello","polianarebello@gmail.com",201557));
-        bdcontroller.insertParticipante(new Aluno("Silvana Girão","giraosilvana@gmail.com",201558));
+        bdcontroller.insertParticipante(new Aluno("Amélia Godoy","amelia@gmail.com","45454545"));
+        bdcontroller.insertParticipante(new Aluno("Bartolomeu","bartolomeu@gmail.com","201551"));
+        bdcontroller.insertParticipante(new Aluno("Catarino Grilo","catarino@gmail.com","201552"));
+        bdcontroller.insertParticipante(new Aluno("Ermelinda Méndez","ermelinda@gmail.com","201553"));
+        bdcontroller.insertParticipante(new Aluno("Hermígio Capanema","capanema@gmail.com","201554"));
+        bdcontroller.insertParticipante(new Aluno("Noé Hernández","noeh@gmail.com","201555"));
+        bdcontroller.insertParticipante(new Aluno("Nídia Simão","nidias@gmail.com","201556"));
+        bdcontroller.insertParticipante(new Aluno("Poliana Rebello","polianarebello@gmail.com","201557"));
+        bdcontroller.insertParticipante(new Aluno("Silvana Girão","giraosilvana@gmail.com","201558"));
     }
 
-    public void carregarListaAlunos() {
-        bdcontroller.loadList();
+    public void carregarListas() {
+        bdcontroller.loadParticipantesList();
+        bdcontroller.loadEventosList();
     }
 
-    public void carregaListaEventos() {
-        this.listaEventos.add(new Evento("Maratona de Programação","24/10/2018","17:00","Professor","Maratona..."));
-        this.listaEventos.add(new Evento("Maratona de Programação2","25/10/2018","17:00","Professor","Maratona..."));
-        this.listaEventos.add(new Evento("Palestra Segurança da Informação","25/10/2018","14:00","Professor","Palestra..."));
-        this.listaEventos.add(new Evento("Vacathon","24/10/2018","17:00","Professor","Palestra..."));
-        this.listaEventos.add(new Evento("Mesa Redonda","24/10/2018","17:00","Professor","Evento..."));
-        this.listaEventos.add(new Evento("Palestra Banco de Dados NOSQL","24/10/2018","17:00","Professor","Palestra..."));
+    public void criarListaEventos() {
+        bdcontroller.insertEvento(new Evento("Maratona de Programação","24/10/2018","17:00","Professor","Maratona..."));
+        bdcontroller.insertEvento(new Evento("Maratona de Programação2","25/10/2018","17:00","Professor","Maratona..."));
+        bdcontroller.insertEvento(new Evento("Palestra Segurança da Informação","25/10/2018","14:00","Professor","Palestra..."));
+        bdcontroller.insertEvento(new Evento("Vacathon","24/10/2018","17:00","Professor","Palestra..."));
+        bdcontroller.insertEvento(new Evento("Mesa Redonda","24/10/2018","17:00","Professor","Evento..."));
+        bdcontroller.insertEvento(new Evento("Palestra Banco de Dados NOSQL","24/10/2018","17:00","Professor","Palestra..."));
     }
 
     public static void alterarDadosParticipante(int position, String nome, String email) {

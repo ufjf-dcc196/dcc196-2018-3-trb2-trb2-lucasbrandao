@@ -20,9 +20,7 @@ public class bdController {
 
 
     public void insertParticipante(Aluno participante) {
-
        try {
-
            ContentValues contentValues = new ContentValues();
 
            contentValues.put("NOME", participante.nome);
@@ -63,7 +61,7 @@ public class bdController {
 
             do {
                 Aluno al = new Aluno(null, null, null);
-                al.matricula = result.getInt(result.getColumnIndexOrThrow("MATRICULA"));
+                al.matricula = result.getString(result.getColumnIndexOrThrow("MATRICULA"));
                 al.nome = result.getString(result.getColumnIndexOrThrow("NOME"));
                 al.email = result.getString(result.getColumnIndexOrThrow("EMAIL"));
 
@@ -76,7 +74,7 @@ public class bdController {
         return participantes;
     }
 
-    public void loadList() {
+    public void loadParticipantesList() {
 
         ArrayList<Aluno> participantes = new ArrayList<Aluno>();
 
@@ -91,7 +89,7 @@ public class bdController {
 
             do {
                 Aluno al = new Aluno(null, null, null);
-                al.matricula = result.getInt(result.getColumnIndexOrThrow("MATRICULA"));
+                al.matricula = result.getString(result.getColumnIndexOrThrow("MATRICULA"));
                 al.nome = result.getString(result.getColumnIndexOrThrow("NOME"));
                 al.email = result.getString(result.getColumnIndexOrThrow("EMAIL"));
 
@@ -119,7 +117,7 @@ public class bdController {
         if (result.getCount() > 0) {
             result.moveToFirst();
 
-            participante.matricula = result.getInt(result.getColumnIndexOrThrow("MATRICULA"));
+            participante.matricula = result.getString(result.getColumnIndexOrThrow("MATRICULA"));
             participante.nome = result.getString(result.getColumnIndexOrThrow("NOME"));
             participante.email = result.getString(result.getColumnIndexOrThrow("EMAIL"));
 
@@ -127,6 +125,51 @@ public class bdController {
         }
 
         return null;
+    }
+
+
+
+    public void insertEvento(Evento event) {
+        try {
+            ContentValues contentValues = new ContentValues();
+
+            contentValues.put("TITULO", event.titulo);
+            contentValues.put("DIA", event.dia);
+            contentValues.put("HORA", event.hora);
+            contentValues.put("FACILITADOR", event.facilitador);
+            contentValues.put("DESCRICAO", event.descricao);
+
+            conection.insertOrThrow("EVENTO", null, contentValues);
+        }catch (SQLException e) {
+            Log.d("insert", "insertEvento: erro");
+        }
+    }
+    public void loadEventosList() {
+
+        ArrayList<Evento> eventos = new ArrayList<Evento>();
+
+        StringBuilder sql = new StringBuilder();
+        sql.append(" SELECT TITULO, DIA, HORA, FACILITADOR, DESCRICAO ");
+        sql.append(" FROM EVENTO ");
+
+        Cursor result = conection.rawQuery(sql.toString(), null);
+
+        if (result.getCount() > 0) {
+            result.moveToFirst();
+
+            do {
+                Evento ev = new Evento(null, null, null, null, null);
+                ev.titulo = result.getString(result.getColumnIndexOrThrow("TITULO"));
+                ev.dia = result.getString(result.getColumnIndexOrThrow("DIA"));
+                ev.hora = result.getString(result.getColumnIndexOrThrow("HORA"));
+                ev.facilitador = result.getString(result.getColumnIndexOrThrow("FACILITADOR"));
+                ev.descricao = result.getString(result.getColumnIndexOrThrow("DESCRICAO"));
+
+                MainActivity.listaEventos.add(ev);
+
+            } while (result.moveToNext());
+
+        }
     }
 
 }

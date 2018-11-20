@@ -7,10 +7,10 @@ public class Aluno implements Serializable{
 
     public String nome;
     public String email;
-    public Integer matricula;
+    public String matricula;
     private ArrayList<Evento> eventosInscritos = new ArrayList<Evento>();
 
-    Aluno(String name, String email, Integer matricula) {
+    Aluno(String name, String email, String matricula) {
         this.nome = name;
         this.email = email;
         this.matricula = matricula;
@@ -24,7 +24,7 @@ public class Aluno implements Serializable{
         return email;
     }
 
-    public Integer getMatricula() {
+    public String getMatricula() {
         return matricula;
     }
 

@@ -12,7 +12,8 @@ public class participanteBD extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        sqLiteDatabase.execSQL(scriptSQL.getCreateTableParticipante());
+        sqLiteDatabase.execSQL(scriptSQL.getCreateTable());
+        sqLiteDatabase.execSQL(scriptSQL.getCreateEventTable());
     }
 
     @Override

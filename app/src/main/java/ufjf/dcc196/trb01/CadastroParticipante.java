@@ -37,7 +37,7 @@ public class CadastroParticipante extends AppCompatActivity {
                 Intent resposta = new Intent();
                 String nome = nomeAluno.getText().toString();
                 String email = emailAluno.getText().toString();
-                Integer matricula = Integer.valueOf(matriculaAluno.getText().toString());
+                String matricula = matriculaAluno.getText().toString();
                 resposta.putExtra("nome", nome);
                 resposta.putExtra("email", email);
                 resposta.putExtra("matricula", matricula);

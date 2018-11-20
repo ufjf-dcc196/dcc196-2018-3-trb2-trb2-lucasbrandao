@@ -5,11 +5,11 @@ import java.util.ArrayList;
 
 public class Evento implements Serializable {
 
-    private String titulo;
-    private String dia;
-    private String hora;
-    private String facilitador;
-    private String descricao;
+    public String titulo;
+    public String dia;
+    public String hora;
+    public String facilitador;
+    public String descricao;
 
     private ArrayList<Aluno> participantesInscritos = new ArrayList<Aluno>();
 
