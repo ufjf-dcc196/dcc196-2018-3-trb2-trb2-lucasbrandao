@@ -5,6 +5,8 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
+import android.database.sqlite.SQLiteOpenHelper;
+import android.content.Context;
 
 import java.util.ArrayList;
 
@@ -33,17 +35,26 @@ public class bdController {
        }
     }
 
-    public void editParticipante(Aluno aluno) {
+    public void editParticipante(Aluno participante) {
 
         ContentValues contentValues = new ContentValues();
-        contentValues.put("MATRICULA", aluno.getMatricula());
-        contentValues.put("NOME", aluno.getNome());
-        contentValues.put("EMAIL", aluno.getEmail());
+        contentValues.put("MATRICULA", participante.matricula);
+        contentValues.put("NOME", participante.nome);
+        contentValues.put("EMAIL", participante.email);
 
-        String[] param = new String[1];
-        param[0] = String.valueOf(aluno.getMatricula());
+        String[] args = {participante.matricula};
+        try {
+            conection.update("PARTICIPANTE", contentValues, "MATRICULA=?", args);
+            Log.d("edit", "editado??? " + participante.matricula);
+        } catch (SQLException e) {
+            Log.d("edit", "editParticipante: erro ao editar");
+        }
 
-        conection.update("PARTICIPANTE", contentValues, "MATRICULA = ?", param);
+      //  String[] param = new String[1];
+      //  param[0] = aluno.matricula;
+
+
+
     }
 
     public ArrayList<Aluno> getAll() {

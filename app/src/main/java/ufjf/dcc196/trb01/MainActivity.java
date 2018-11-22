@@ -32,12 +32,12 @@ public class MainActivity extends AppCompatActivity {
 
     private static RecyclerView lstAluno;
     public static RecyclerView lstEvento;
-    private static ParticipanteAdapter alunoAdapter;
+    public static ParticipanteAdapter alunoAdapter;
     public static EventoAdapter eventoAdapter;
 
     public SQLiteDatabase conection;
     public participanteBD dados_bd;
-    public bdController bdcontroller;
+    public static bdController bdcontroller;
 
     public static ArrayList<Aluno> listaAlunos = new ArrayList<Aluno>();
     public static ArrayList<Evento> listaEventos = new ArrayList<Evento>();
@@ -76,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
         lstAluno.setLayoutManager(linearLayoutManager);
         alunoAdapter = new ParticipanteAdapter(listaAlunos);
         lstAluno.setAdapter(alunoAdapter);
+
 
 
         lstEvento = (RecyclerView) findViewById(R.id.lstEventos);
@@ -119,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
 
                     Aluno novoAluno = new Aluno(nome, email, matricula);
                     bdcontroller.insertParticipante(novoAluno);
-                    bdcontroller.loadParticipantesList();
+                   // bdcontroller.loadParticipantesList();
                     alunoAdapter.notifyDataSetChanged();
 
                     Toast.makeText(getApplicationContext(), "Aluno Registrado: "+ nome, Toast.LENGTH_LONG).show();

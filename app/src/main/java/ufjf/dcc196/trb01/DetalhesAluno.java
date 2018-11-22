@@ -107,10 +107,18 @@ public class DetalhesAluno extends AppCompatActivity {
                 String nome = resultado.getString("nome");
                 String email = resultado.getString("email");
 
+                // pegar matricula original
+                Bundle dados = getIntent().getExtras();
+                Aluno participante = (Aluno) dados.getSerializable("DADOS_PARTICIPANTE");
+                String matricula = participante.matricula;
 
-                // alterando na lista de alunos.
-                int position = getIntent().getExtras().getInt("ALUNOPOSITION");
-                MainActivity.alterarDadosParticipante(position, nome, email);
+                // alterando no banco de dados.
+                Aluno edtParticipante = new Aluno(nome, email, matricula);
+                MainActivity.bdcontroller.editParticipante(edtParticipante);
+                MainActivity.listaAlunos.clear();
+                MainActivity.alunoAdapter.notifyDataSetChanged();
+                MainActivity.bdcontroller.loadParticipantesList();
+
 
                 // alterando nome na activity detalhesaluno
                 this.nome.setText(nome);

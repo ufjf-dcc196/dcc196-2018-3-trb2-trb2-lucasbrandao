@@ -2,7 +2,7 @@ package ufjf.dcc196.trb01;
 
 public class scriptSQL {
 
-    public static String getCreateTable() {
+    public static String getCreateParticipanteTable() {
         StringBuilder sql   = new StringBuilder();
 
         sql.append("    CREATE TABLE IF NOT EXISTS PARTICIPANTE ( ");
@@ -11,7 +11,6 @@ public class scriptSQL {
         sql.append("    EMAIL       VARCHAR (50) NOT NULL ); ");
 
         return sql.toString();
-
     }
 
     public static String getCreateEventTable() {
@@ -25,8 +24,8 @@ public class scriptSQL {
         sql.append("    DESCRICAO   VARCHAR (50) NOT NULL ) ");
 
         return sql.toString();
-
     }
+
 
 
 }
